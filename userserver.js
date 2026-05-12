@@ -16,9 +16,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
   
- mongoose.connect(process.env.MONGO_URL)
-    .then(()=>console.log('Ammy Database Connected'))
-    .catch((error)=>console.log('Database Not Connected'));
+mongoose.connect(process.env.MONGO_URL,{
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+})
+.then(()=>console.log('Ammy Database Connected'))
+.catch((error)=>console.log(error));
 
     app.post('/users',async(req,res)=>{
         try {
@@ -154,6 +157,8 @@ app.use(express.static('public'));
 
   
 
- app.listen(9898,()=>{
-        console.log('Server running at http://127.0.0.1:9898');
-    });
+ const PORT = process.env.PORT || 9898;
+
+app.listen(PORT,()=>{
+    console.log(`Server running on port ${PORT}`);
+});
